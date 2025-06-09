@@ -29,7 +29,7 @@ This is my first Arduino project—made to delve deep into understanding embedde
 
 ## Circuit Diagram
 
-![Wiring Diagram]()
+![Wiring Diagram](wiring-diagram.png)
 
 ---
 
