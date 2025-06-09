@@ -69,3 +69,6 @@ Install these via the Arduino Library Manager.
 
 project demonstration in Wokwi:
   -> [Run Code](https://wokwi.com/projects/433297984977377281)
+
+Project demonstration on youtube:
+   -> [Watch Demo](https://youtu.be/ajZx0IpHo-g)
