@@ -1,4 +1,3 @@
-#include <Tiny4kOLED.h>
 #include <U8g2lib.h>
 #include "pitches.h"
 
@@ -24,7 +23,6 @@ float filteredStatus = 50.0;
 
 float x = -0.5; 
 
-
 int prevDigits;
 
 void setup() {
@@ -48,9 +46,9 @@ void checkSensor(int d)
 {
   long unsigned currentMillis = millis();
 
-  if(d < 50) {
+  if(d < 25) {
     newStatus = 100; // Red (close)
-  } else if(d >= 50 && d < 200) {
+  } else if(d >= 25 && d < 50) {
     newStatus = 50; // Green (near) 
   } else {
     newStatus = 0; // Blue (far away)
@@ -83,15 +81,15 @@ void checkSensor(int d)
       
     }
 
-    float y = expf( -50.0 * squaref(x)); // Amplitude of the RGB values
+    float y = expf(-50.0 * squaref(x)); // Amplitude of the RGB values
 
-    x += f * float( interval) / 1000.0;  // divide interval by 1000 because it is in milliseconds
+    x += f * float(interval) / 1000.0;  // divide interval by 1000 because it is in milliseconds
     if( x >= 0.5)
       x -= 1.0;
 
-    int pwmR = (int) round( 1.0 + (r * y * 254.0));
-    int pwmG = (int) round( 1.0 + (g * y * 254.0));
-    int pwmB = (int) round( 1.0 + (b * y * 254.0));
+    int pwmR = (int) round(1.0 + (r * y * 254.0));
+    int pwmG = (int) round(1.0 + (g * y * 254.0));
+    int pwmB = (int) round(1.0 + (b * y * 254.0));
 
     bool shouldBeep = false;
     int beepFreq = 0;
@@ -137,11 +135,11 @@ void loop() {
     digits++;
   }
 
-  if(digits != prevDigits) {
-    display.clearLine(3);
-  }
+  if(digits != prevDigits) 
+    display.clearLine(3); // Clears the the display when the number of digits on screen change to prevent hanging characters on the oled.
+  
 
-  display.setCursor(1, 3);
+  display.setCursor(0, 3);
   display.print("Distance: ");
   display.print(distance);
   display.print("cm");
