@@ -12,7 +12,7 @@
 #define PIN_G 6
 #define PIN_B 9
 
-#define PIN_bz1 8
+#define PIN_bz1 8 //
 
 U8X8_SSD1306_128X64_NONAME_HW_I2C display(U8X8_PIN_NONE);
 
@@ -22,8 +22,10 @@ const unsigned long interval = 40;
 float newStatus = 50.0;        
 float filteredStatus = 50.0;
 
-float x = -0.5;  
+float x = -0.5; 
 
+
+int prevDigits;
 
 void setup() {
 
@@ -42,7 +44,7 @@ void setup() {
   display.setFont(u8x8_font_pxplusibmcgathin_f);
 }
 
-void checkSensor(const int d)
+void checkSensor(int d)
 {
   long unsigned currentMillis = millis();
 
@@ -124,13 +126,26 @@ void loop() {
   digitalWrite(PIN_TRIG, LOW);
 
   // Read the result:
-  const int dur = pulseIn(PIN_ECHO, HIGH) / 58;
+  int distance = pulseIn(PIN_ECHO, HIGH) / 58; // To convert the distance recieved to cm
 
-  checkSensor(dur);
+  checkSensor(distance);
+
+  int digits = 1;
+  int temp = distance;
+  while(temp >= 10) {
+    temp /= 10;
+    digits++;
+  }
+
+  if(digits != prevDigits) {
+    display.clearLine(3);
+  }
 
   display.setCursor(1, 3);
   display.print("Distance: ");
-  display.print(dur);
+  display.print(distance);
   display.print("cm");
+
+  prevDigits = digits;
 
 }
