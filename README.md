@@ -29,7 +29,7 @@ This is my first Arduino project—made to delve deep into understanding embedde
 
 ## Circuit Diagram
 
-![Wiring Diagram](wiring-diagram.png)
+![Arduino Wiring Diagram](wiring-diagram.png)
 
 ---
 
@@ -60,6 +60,10 @@ Install these via the Arduino Library Manager.
 - Using sensors and actuators (ultrasonic, LED, buzzer)
 - Simple wiring and electronics
 - Displaying information on an OLED screen
+-  **Timer conflicts on Arduino Uno:**  
+  I learned that using the `tone()` function for the buzzer and `analogWrite()` for RGB LEDs on certain pins (specifically pins 3 and 11) can cause issues, because they share the same timer hardware inside the Arduino. To avoid glitches, I assigned my RGB LED pins to 5, 6, and 9, which use separate timers from the buzzer output.
+- The importance of using resistors with LEDs to avoid damaging components.
+
 
 ---
 
